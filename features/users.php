@@ -24,9 +24,67 @@ class User {
 }
 
 class Session extends User {
-
     private function __construct($id, $name, $user, $email, $hasProfilePic) {
         parent::__construct($id, $name, $user, $email, $hasProfilePic);
+    }
+
+    public function update(?string $name, ?string $user) {
+        $fields = [];
+        $values = [];
+
+
+    }
+
+    public function set_photo($file): SetPhotoResult {
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime = finfo_file($finfo, $file["tmp_name"]);
+        finfo_close($finfo);
+
+        $allowed = false;
+        $split = str_split($mime);
+        $allowed_types = ['jpg', "jpeg", 'png', 'gif'];
+        foreach ($split as $value) {
+            if (in_array(strtolower($value), $allowed_types)) {
+                $allowed = true;
+                break;
+            }
+        }
+
+        if ($allowed) {
+            try {
+                move_uploaded_file($file['tmp_name'], "data/profile_pictures/{$this->get_id()}");
+            } catch (error) {
+                return new SetPhotoResult("Erro ao tentar salvar imagem.");
+            }
+            global $connection;
+            $stmt = $connection->prepare("UPDATE users SET photo = 1 WHERE id = ?");
+            $id = $this->get_id();
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            return new SetPhotoResult();
+        } else {
+            return new SetPhotoResult("Tipo de imagem incorreto");
+        }
+    }
+
+    public function remove_photo(): SetPhotoResult {
+        $result = false;
+
+        try {
+            $result = unlink("data/profile_pictures/{$this->get_id()}");
+        } catch(err) {}
+
+        if (!$result) {
+            return new SetPhotoResult("Erro ao apagar foto");
+        }
+
+        global $connection;
+        $stmt = $connection->prepare("UPDATE users SET photo = 0 WHERE id = ?");
+        $id = $this->get_id();
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        return new SetPhotoResult();
     }
 
     public static function login(string $userMail, string $password): LoginResult {
@@ -139,5 +197,17 @@ class LoginFailure extends LoginResult {
 
     public function __construct(string $error) {
         $this->error = new Exception($error);
+    }
+}
+
+class SetPhotoResult {
+    private bool $okay;
+    private Exception $error;
+
+    public function __construct(?string $error = null) {
+        $this->okay = $error == null;
+        if ($error != null) {
+            $this->error = new Exception($error);
+        }
     }
 }
