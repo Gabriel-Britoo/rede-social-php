@@ -1,5 +1,5 @@
 <?php
-include '../php/connection.php';
+include 'php/connection.php';
 
 class User {
     private int $id;
@@ -8,12 +8,18 @@ class User {
     private string $email;
     private bool $hasProfilePic;
 
-    public function __construct($id, $name, $user, $email, $hasProfilePic) {
-        $this->$id = $id;
-        $this->$name = $name;
-        $this->$user = $user;
-        $this->$email = $email;
-        $this->$hasProfilePic = $hasProfilePic;
+    public function get_id() { return $this->id;}
+    public function get_name() { return $this->name;}
+    public function get_user() { return $this->user;}
+    public function get_email() { return $this->email;}
+    public function get_hasProfilePic() { return $this->hasProfilePic;}
+
+    protected function __construct($id, $name, $user, $email, $hasProfilePic) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->user = $user;
+        $this->email = $email;
+        $this->hasProfilePic = $hasProfilePic;
     }
 }
 
@@ -114,13 +120,13 @@ class Session extends User {
 /// user -> [a-z][A-Z][0-9][_][-][.]
 
 abstract class LoginResult {
-    public ?Session $session;
-    public ?Exception $error;
+    public Session $session;
+    public Exception $error;
 }
 
 class LoginSuccess extends LoginResult {
     public Session $session;
-    public null $error;
+    public Exception $error;
 
     public function __construct(Session $session) {
         $this->session = $session;
@@ -128,7 +134,7 @@ class LoginSuccess extends LoginResult {
 }
 
 class LoginFailure extends LoginResult {
-    public null $session;
+    public Session $session;
     public Exception $error;
 
     public function __construct(string $error) {
