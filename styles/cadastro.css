@@ -14,7 +14,7 @@ body {
 img {
     height: 95%;
     border-radius: 1rem;
-    margin-right: 20px;
+    margin-left: 20px;
 }
 
 .form-box {
@@ -51,6 +51,13 @@ h2 {
 label {
     font-size: 18px;
     margin-bottom: 8px;
+}
+
+#file-input {
+    padding: 6px;
+    background-color: #f9f9f900;
+    border: 1px dashed #ccc;
+    font-size: 15px;
 }
 
 input {
