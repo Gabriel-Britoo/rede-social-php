@@ -1,3 +1,26 @@
+<?php
+session_start();
+include 'features/users.php';
+
+$error_message = false;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['email']) && isset($_POST["password"])) {
+        $result = Session::login($_POST['email'], $_POST['password']);
+
+        if ($result instanceof LoginSuccess) {
+            $_SESSION["session"] = $result->session;
+            header("Location: feed.php");
+            exit;
+        } else if ($result instanceof LoginFailure) {
+            $error_message = $result->error;
+        }
+    } else {
+        $error_message = "Parâmetros insuficientes";
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +36,7 @@
     <div class="form-box"> 
         <h1>Entrar</h1>
         <h2>Insira suas credenciais para acessar sua conta</h2>
-        <form action="">
+        <form action="" method="POST">
             <label for="email">Email</label>
             <input type="email" name="email" placeholder="E-mail">
             <label for="password">Senha</label>
