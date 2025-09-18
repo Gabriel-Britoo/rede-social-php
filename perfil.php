@@ -30,8 +30,6 @@
                     <input id='campo-nome' name="nome" type='text' value='#'>
                     <label class='nome-acima'>NOME DE USUARIO</label>
                     <input id='campo-nome' name="nome" type='text' value='#'>
-                    <label class='nome-acima'>EMAIL</label>
-                    <input id='campo-email' name="email" type='email' value='#'>
                     <label class='nome-acima'>SENHA</label>
                     <input id='campo-senha' name="senha" type='password' placeholder="Nova senha">
                     <div id='mostrar'>
