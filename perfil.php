@@ -16,6 +16,7 @@
     <div class="pagina-perfil">
         <div id="fundo">
             <img id="banner-histweb" src="img/HistWebWhite.svg" alt="">
+            <p id="nome-usuario">Olá, &lt;Nome&gt;</p>
         </div>
         <form class="informacoes" action="#">
             <img id='user-perfil' src='./img/user.png' alt=''>
@@ -37,6 +38,14 @@
                     <button type="submit" id="confirma">Confirmar alterações</button>
                 </div>
             </div>
+            <p>Lista de amigos</p>
+            <p class="nome-amigo">Nome do amigo1</p>
+            <img id='user-perfil-pequeno' src='./img/user.png' alt=''>
+            <p class="nome-amigo">Nome do amigo2</p>
+            <img id='user-perfil-pequeno' src='./img/user.png' alt=''>
+            <p class="nome-amigo">Nome do amigo3</p>
+            <img id='user-perfil-pequeno' src='./img/user.png' alt=''>
+            
         </form>
     </div>
 </main>

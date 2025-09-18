@@ -1,0 +1,15 @@
+body {
+    background-color: #282a32;
+    height: 200vh;
+    display: flex;
+}
+
+.posts {
+    display: flex;
+    align-items: center;
+}
+
+#post {  
+    background-color: #1d1e21;
+    border-radius: 10px;
+}
