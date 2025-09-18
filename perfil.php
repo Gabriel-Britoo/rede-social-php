@@ -32,7 +32,7 @@ $user = $_SESSION["session"];
             <img id='user-perfil' src='./img/user.png' alt=''>
             
             <div class='info'>
-                <div class='nome-email'>
+                <form class='nome-email' action="" method="post">
                     <input type="hidden" name="id" value="#">
                     <label class="nome-acima" for="upload">IMAGEM</label>
                     <input id="upload" type="file" name="imagem" accept="image/*">
@@ -46,7 +46,7 @@ $user = $_SESSION["session"];
                         <input type='checkbox' onclick='mostrarSenha()'> Mostrar senha
                     </div>
                     <button type="submit" id="confirma">Confirmar alterações</button>
-                </div>
+                </form>
             </div>
             <p>Lista de amigos</p>
             <?php

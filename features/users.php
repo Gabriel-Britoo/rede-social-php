@@ -28,11 +28,40 @@ class Session extends User {
         parent::__construct($id, $name, $user, $email, $hasProfilePic);
     }
 
-    public function update(?string $name, ?string $user) {
+    public function update(?string $name = null, ?string $user = null, ?string $password = null) {
         $fields = [];
         $values = [];
 
+        if ($name) {
+            array_push($fields, "name");
+            array_push($values, $name);
+        }
 
+        if ($user) {
+            array_push($fields, "user");
+            array_push($values, $user);
+        }
+
+        if ($password) {
+            array_push($fields, "password");
+            array_push($values, password_hash($password, PASSWORD_DEFAULT));
+        }
+
+        if (count($fields) > 0) {
+            global $connection;
+            $setClause = implode(" = ?, ", $fields) . " = ?";
+            $sql = "UPDATE users SET $setClause WHERE id = ?";
+            $stmt = $connection->prepare($sql);
+
+            $types = str_repeat("s", count($values)) . "i";
+            $values[] = $this->id;
+
+            $stmt->bind_param($types, ...$values);
+            $stmt->execute();
+
+            if ($name) $this->name = $name;
+            if ($user) $this->user = $user;
+        }
     }
 
     public function friend($id) {
