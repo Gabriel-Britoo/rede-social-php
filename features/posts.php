@@ -75,5 +75,3 @@ class Post {
         }
     }
 }
-
-Post::feed($_SESSION['session']);

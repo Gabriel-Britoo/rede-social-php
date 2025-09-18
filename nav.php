@@ -4,29 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
     <title>NotInstagram</title>
 </head>
 
 <body id="body-nav">
     <div class="layout">
         <nav>
-            <div class="topo-nav">
-                <h1>NotInstagram</h1>
-            </div>
-            <div class="lista-nav">
-                <ul>
-                    <li><i class="fa-solid fa-house"></i><a href="feed.php">Feed</a></li>
-                    <li><i class="fa-solid fa-comment"></i><a href="chat.php">Chat</a></li>
-                    <li><i class="fa-solid fa-square-plus"></i><a href="post.php">Publicar</a></li>
-                    <li><i class="fa-solid fa-right-from-bracket"></i><a href="index.php">Sair</a></li>
-                </ul>
+            <div class="nav-topo-lista">
+                <div class="topo-nav">
+                    <img src="img/conex.png" alt="Logo">
+                </div>
+                <div class="lista-nav">
+                    <ul>
+                        <li><i class="fa-solid fa-house"></i><a href="feed.php">Feed</a></li>
+                        <li><i class="fa-regular fa-comment"></i><a href="chat.php">Chat</a></li>
+                        <li><i class="fa-regular fa-square-plus"></i><a href="postar.php">Publicar</a></li>
+                        <li><i class="fa-solid fa-right-from-bracket"></i><a href="index.php">Sair</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="perfil-nav">
                 <img src="img/user.png" alt="" id="user-nav">
                 <div>
                     <p>Lin da Silva</p>
-                    <a href="">Meu perfil <i class="fa-solid fa-chevron-right"></i></a>
+                    <a href="perfil.php">Meu perfil <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
             </div>
         </nav>
@@ -57,11 +59,25 @@
         height: 100vh;
         left: 0;
         top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .topo-nav {
         padding: 20px;
         color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0e1e99;
+        background: linear-gradient(90deg, rgba(18, 28, 98, 1) 0%, rgba(73, 90, 221, 1) 100%);
+        border-radius: 10px;
+        margin: 10px;
+    }
+
+    .topo-nav img {
+        width: 150px;
     }
 
     .lista-nav {
@@ -97,12 +113,12 @@
     }
 
     .perfil-nav {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
+        padding: 20px;
+        margin: 10px;
         color: white;
-        margin: 10px 10px 25px 10px;
         display: flex;
+        background-color: #1d1e21;
+        border-radius: 10px;
     }
 
     .perfil-nav div {

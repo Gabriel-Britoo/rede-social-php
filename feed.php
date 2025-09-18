@@ -1,3 +1,12 @@
+<?php
+include 'features/posts.php';
+include 'features/users.php';
+
+session_start();
+
+$posts = Post::feed($_SESSION["session"], 1);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +25,9 @@
         <div id="post">
             <div class="topo-post">
                 <img src="img/user.png" alt="Foto de perfil do usuário">
-                <p>Nome do usuário</p>
+                <p id="nome">jana_montserrat</p>
+                <p id="em">em</p>
+                <p id="data">10/09/2025</p>
             </div>
 
             <img src="img/franca.jpg" alt="Imagem do post" id="img-post">
@@ -25,12 +36,58 @@
                 <i class="fa-regular fa-heart"></i>
                 <p>205</p>
                 <i class="fa-regular fa-comment"></i>
-                12
+                <p>12</p>
             </div>
 
             <div class="descricao-post">
-                <h1>Título</h1>
-                <p>Descrição</p>
+                <h1>#por_aí</h1>
+                <p>foto do quintal de casa rs</p>
+            </div>
+        </div>
+
+        <div id="post">
+            <div class="topo-post">
+                <img src="img/user.png" alt="Foto de perfil do usuário">
+                <p id="nome">pedrxxc01</p>
+                <p id="em">em</p>
+                <p id="data">12/08/2025</p>
+            </div>
+
+            <img src="img/trilha.jpg" alt="Imagem do post" id="img-post">
+
+            <div class="interacoes-post">
+                <i class="fa-solid fa-heart" style="color: #729cffff;"></i>
+                <p>57</p>
+                <i class="fa-regular fa-comment"></i>
+                <p>4</p>
+            </div>
+
+            <div class="descricao-post">
+                <h1>Trilha pra desestressar</h1>
+                <p>Quase morremo slk kkkkk</p>
+            </div>
+        </div>
+
+        <div id="post">
+            <div class="topo-post">
+                <img src="img/user.png" alt="Foto de perfil do usuário">
+                <p id="nome">soled_byCucaBeludo</p>
+                <p id="em">em</p>
+                <p id="data">20/08/2025</p>
+            </div>
+
+            <img src="img/fogo.jpg" alt="Imagem do post" id="img-post">
+
+            <div class="interacoes-post">
+                <i class="fa-regular fa-heart"></i>
+                <p>999</p>
+                <i class="fa-regular fa-comment"></i>
+                <p>000</p>
+            </div>
+
+            <div class="descricao-post">
+                <h1>Achou que todos os posts eram bonitinhos né kkkk</h1>
+                <p>Cuidado quando for tentar rodar GTA 6 no PC com 8 de RAM e um processador i5, os cara falou que não tinha problema kkkkjkjkjkkkk</p>
             </div>
         </div>
 
