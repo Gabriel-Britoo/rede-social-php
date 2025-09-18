@@ -35,6 +35,39 @@ class Session extends User {
 
     }
 
+    public function friend($id) {
+        global $connection;
+        $sql = "SELECT id FROM users WHERE id = ?";
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows == 0) {
+            return new FriendResult("Usuário não existe.");
+        }
+
+        $sql = "INSERT INTO user_relations(user1_id, user2_id) VALUES (?, ?)";
+        $stmt = $connection->prepare($sql);
+        $userId = $this->get_id();
+        $stmt->bind_param("ii", $userId, $id);
+        $stmt->execute();
+        
+        return new FriendResult();
+    }
+
+    public function unfriend($id) {
+        global $connection;
+        $sql = "DELETE FROM user_relations WHERE user1_id = ? AND user2_id = ? OR user1_id = ? and user2_id = ?";
+        $stmt = $connection->prepare($sql);
+        $userId = $this->get_id();
+        $stmt->bind_param("iiii", $userId, $id, $id, $userId);
+        $stmt->execute();
+        
+        return new FriendResult();
+    }
+
     public function set_photo($file): SetPhotoResult {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime = finfo_file($finfo, $file["tmp_name"]);
@@ -210,4 +243,33 @@ class SetPhotoResult {
             $this->error = new Exception($error);
         }
     }
+}
+
+class FriendResult {
+    public bool $okay;
+    public string $error;
+
+    public function __construct(?string $error = null) {
+        $this->okay = $error == null;
+        if ($error != null) {
+            $this->error = $error;
+        }
+    }
+}
+
+function isImage($file): bool {
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mime = finfo_file($finfo, $file["tmp_name"]);
+    finfo_close($finfo);
+
+    $allowed = false;
+    $split = str_split($mime);
+    $allowed_types = ['jpg', "jpeg", 'png', 'gif'];
+    foreach ($split as $value) {
+        if (in_array(strtolower($value), $allowed_types)) {
+            $allowed = true;
+            break;
+        }
+    }
+    return $allowed;
 }
