@@ -2,11 +2,11 @@
 include 'php/connection.php';
 
 class User {
-    private int $id;
-    private string $name;
-    private string $user;
-    private string $email;
-    private bool $hasProfilePic;
+    protected int $id;
+    protected string $name;
+    protected string $user;
+    protected string $email;
+    protected bool $hasProfilePic;
 
     public function get_id() { return $this->id;}
     public function get_name() { return $this->name;}
@@ -68,6 +68,36 @@ class Session extends User {
         return new FriendResult();
     }
 
+    /**
+     * Summary of list_friends
+     * @return User[]
+     */
+    public function list_friends(): array {
+        global $connection;
+        $sql = "SELECT * FROM users WHERE id IN (
+            SELECT user1_id FROM user_relations WHERE user2_id = ? UNION SELECT user2_id FROM user_relations WHERE user1_id = ?
+        )";
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param("ii", $this->id, $this->id);
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+
+        $friends = [];
+
+        while ($friend = $result->fetch_assoc()) {
+            array_push($friends, new User(
+                $friend['id'],
+                $friend['name'],
+                $friend['user'],
+                $friend['email'],
+                (bool)$friend['photo']
+            ));
+        }
+        
+        return $friends;
+    }
+
     public function set_photo($file): SetPhotoResult {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime = finfo_file($finfo, $file["tmp_name"]);
@@ -94,6 +124,7 @@ class Session extends User {
             $id = $this->get_id();
             $stmt->bind_param("i", $id);
             $stmt->execute();
+            $this->hasProfilePic = true;
             return new SetPhotoResult();
         } else {
             return new SetPhotoResult("Tipo de imagem incorreto");
@@ -117,6 +148,7 @@ class Session extends User {
         $stmt->bind_param("i", $id);
         $stmt->execute();
 
+        $this->hasProfilePic = false;
         return new SetPhotoResult();
     }
 

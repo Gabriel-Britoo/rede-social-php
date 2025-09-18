@@ -1,3 +1,13 @@
+<?php
+include "features/users.php";
+
+session_start();
+/**
+ * @var Session
+ */
+$user = $_SESSION["session"];
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,7 +26,7 @@
     <div class="pagina-perfil">
         <div id="fundo">
             <img id="banner-histweb" src="img/HistWebWhite.svg" alt="">
-            <p id="nome-usuario">Olá, &lt;Nome&gt;</p>
+            <p id="nome-usuario">Olá, <?= $user->get_name() ?></p>
         </div>
         <form class="informacoes" action="#">
             <img id='user-perfil' src='./img/user.png' alt=''>
@@ -27,9 +37,9 @@
                     <label class="nome-acima" for="upload">IMAGEM</label>
                     <input id="upload" type="file" name="imagem" accept="image/*">
                     <label class='nome-acima'>NOME</label>
-                    <input id='campo-nome' name="nome" type='text' value='#'>
+                    <input id='campo-nome' name="nome" type='text' value='<?= $user->get_name() ?>'>
                     <label class='nome-acima'>NOME DE USUARIO</label>
-                    <input id='campo-nome' name="nome" type='text' value='#'>
+                    <input id='campo-nome' name="nome" type='text' value='<?= $user->get_user() ?>'>
                     <label class='nome-acima'>SENHA</label>
                     <input id='campo-senha' name="senha" type='password' placeholder="Nova senha">
                     <div id='mostrar'>
@@ -39,12 +49,20 @@
                 </div>
             </div>
             <p>Lista de amigos</p>
-            <p class="nome-amigo">Nome do amigo1</p>
+            <?php
+            foreach ($user->list_friends() as $friend) {
+                echo "
+                <p class='nome-amigo'>{$friend->get_name()}</p>
+                <img id='user-perfil-pequeno' src='./img/user.png' alt=''>
+                ";
+            }
+            ?>
+            <!-- <p class="nome-amigo">Nome do amigo1</p>
             <img id='user-perfil-pequeno' src='./img/user.png' alt=''>
             <p class="nome-amigo">Nome do amigo2</p>
             <img id='user-perfil-pequeno' src='./img/user.png' alt=''>
             <p class="nome-amigo">Nome do amigo3</p>
-            <img id='user-perfil-pequeno' src='./img/user.png' alt=''>
+            <img id='user-perfil-pequeno' src='./img/user.png' alt=''> -->
             
         </form>
     </div>
