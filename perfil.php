@@ -27,7 +27,7 @@
                     <label class="nome-acima" for="upload">IMAGEM</label>
                     <input id="upload" type="file" name="imagem" accept="image/*">
                     <label class='nome-acima'>NOME</label>
-                    <input id="upload" type="file" name="imagem" accept="image/*">
+                    <input id='campo-nome' name="nome" type='text' value='#'>
                     <label class='nome-acima'>NOME DE USUARIO</label>
                     <input id='campo-nome' name="nome" type='text' value='#'>
                     <label class='nome-acima'>EMAIL</label>
