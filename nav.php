@@ -27,7 +27,7 @@
             <div class="perfil-nav">
                 <img src="img/user.png" alt="" id="user-nav">
                 <div>
-                    <p>Lin da Silva</p>
+                    <p><?php echo $_SESSION["session"]->get_user(); ?></p>
                     <a href="perfil.php">Meu perfil <i class="fa-solid fa-chevron-right"></i></a>
                 </div>
             </div>
